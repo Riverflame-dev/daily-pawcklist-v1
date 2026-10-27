@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap');
+@import "tailwindcss";
+@import "tailwindcss-safe-area";
+
+@theme {
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+  --text-xl: 20px;
+  --text-xl--line-height: 28px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 32px;
+  --text-3xl: 30px;
+  --text-3xl--line-height: 36px;
+  --text-4xl: 36px;
+  --text-4xl--line-height: 40px;
+  --text-5xl: 48px;
+  --text-5xl--line-height: 52px;
+  --font-sans: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #0d120c;
+  --surface: #1d241c;
+  --surface-alt: #232a22;
+  --text: #f4f0e1;
+  --dim: rgba(244, 240, 225, 0.55);
+  --border: rgba(168, 198, 134, 0.22);
+  --accent: #a8c686;
+  --accent-soft: rgba(168, 198, 134, 0.16);
+  --amber: #f4c95d;
+  --amber-soft: rgba(244, 201, 93, 0.16);
+  --danger: #e79fb4;
+  --radius: 16px;
+  --space-surface: var(--surface);
+  --space-surface-alt: var(--surface-alt);
+  --space-muted: var(--dim);
+  --space-border: var(--border);
+  --space-accent: var(--accent);
+
+  --sage: #a8c686;
+  --sage-light: #bcd69c;
+  --butter: #f4c95d;
+  --cream: #fbf4e0;
+  --cream-ink: #26331f;
+  --ink-faint: rgba(244, 240, 225, 0.34);
+  --card-edge: rgba(168, 198, 134, 0.22);
+  --sheet-white: #faf4de;
+  --sheet-green: #83b079;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---------- faint background shapes ---------- */
+.bg-decor { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.bg-decor svg { position: absolute; fill: var(--sage); }
+.bg-decor .s1 { width: 340px; height: 340px; top: -120px; right: -110px; opacity: 0.05; transform: rotate(18deg); }
+.bg-decor .s2 { width: 150px; height: 150px; bottom: 12%; left: -60px; opacity: 0.045; transform: rotate(-14deg); }
+.bg-decor .p1 { width: 170px; height: 170px; bottom: -40px; right: 6%; opacity: 0.05; transform: rotate(24deg); }
+.bg-decor .p2 { width: 92px; height: 92px; top: 44%; right: -24px; opacity: 0.04; transform: rotate(-30deg); }
+
+.page-wrap { position: relative; z-index: 1; max-width: 468px; margin: 0 auto; padding: 14px 10px 28px; }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  border-radius: 26px;
+  background: linear-gradient(160deg, #c0d69e 0%, var(--sage-light) 45%, var(--sage) 100%);
+  color: var(--cream-ink);
+  overflow: hidden;
+  height: 168px;
+}
+.hero .star-deco { position: absolute; fill: #5d7d3e; opacity: 0.14; }
+.hero .star-deco.a { width: 110px; height: 110px; top: -34px; right: 30%; transform: rotate(12deg); }
+.hero .star-deco.b { width: 120px; height: 120px; bottom: -52px; right: -18px; transform: rotate(-10deg); }
+.hero .star-deco.c { width: 54px; height: 54px; top: 6px; right: 6px; transform: rotate(14deg); opacity: 0.1; }
+.hero-cat { position: absolute; left: 4px; bottom: 0; width: 41%; height: auto; z-index: 1; display: block; }
+.hero-main { position: relative; z-index: 2; margin-left: 44%; padding: 15px 16px 0 2px; height: 100%; min-width: 0; display: flex; flex-direction: column; }
+.hero-date { font-weight: 800; font-size: 14.5px; letter-spacing: 0.02em; color: #ffffff; text-shadow: 0 1px 2px rgba(38, 51, 31, 0.18); }
+.hero-day {
+  font-family: "Baloo 2", "Nunito", sans-serif;
+  font-weight: 800;
+  line-height: 1.04;
+  color: #10130e;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+}
+.progress-zone { position: relative; margin-top: auto; padding-bottom: 16px; }
+.progress-meta { display: flex; justify-content: flex-end; align-items: flex-end; min-height: 24px; margin-bottom: 3px; }
+.progress-pct { font-family: "Baloo 2", "Nunito", sans-serif; font-weight: 800; font-size: 21px; line-height: 1; color: #ffffff; text-shadow: 0 1px 2px rgba(38, 51, 31, 0.18); }
+.progress-track { position: relative; height: 12px; border-radius: 99px; background: #141614; }
+.progress-fill { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: #ffffff; transition: width 0.45s cubic-bezier(0.34, 1.3, 0.5, 1); }
+.bar-cat { position: absolute; left: 6px; bottom: -3px; width: 94px; z-index: 3; pointer-events: none; }
+.bar-cat svg { display: block; width: 100%; height: auto; overflow: visible; }
+.bar-cat .sleep-star { display: none; }
+.progress-zone.all-done .bar-cat .sleep-star { display: block; position: absolute; top: -10px; right: -6px; width: 18px; height: 18px; fill: var(--butter); animation: twinkle 1.6s ease-in-out infinite alternate; }
+@keyframes twinkle { from { transform: scale(0.85) rotate(-6deg); } to { transform: scale(1.1) rotate(8deg); } }
+
+/* ---------- mini calendar ---------- */
+.daystrip { position: relative; margin-top: 14px; background: #0a0c0a; border-radius: 24px; padding: 13px 34px 15px; }
+.week-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.week-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 28px; height: 52px; background: none; border: none; padding: 0; display: grid; place-items: center; transition: transform 0.12s; cursor: pointer; }
+.week-arrow:active { transform: translateY(-50%) scale(0.85); }
+.week-arrow svg { width: 15px; height: 21px; fill: var(--sage-light); display: block; }
+.week-arrow.prev { left: 4px; }
+.week-arrow.next { right: 4px; }
+.day-cell { background: none; border: none; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #ffffff; cursor: pointer; font-family: inherit; }
+.day-cell .dow { font-size: 14px; font-weight: 800; letter-spacing: 0.04em; color: #ffffff; }
+.day-cell .bubble { position: relative; width: 42px; height: 42px; display: grid; place-items: center; }
+.day-cell .num { position: relative; z-index: 1; font-weight: 800; font-size: 16.5px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #3c3c3c; color: #ffffff; transition: background 0.2s, color 0.2s; }
+.day-cell .cathead { display: none; }
+.day-cell.selected .num { background: transparent; color: #141a10; transform: translateY(2px); }
+.day-cell.selected .cathead { display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 39px; height: 35.6px; fill: #bcd69c; }
+.day-cell.today:not(.selected) .num { background: var(--butter); color: #2c2410; }
+.back-today { display: block; margin: 6px auto 0; background: none; border: none; color: var(--sage); font-family: inherit; font-size: 13.5px; font-weight: 800; padding: 2px 10px; cursor: pointer; }
+
+/* ---------- section headers ---------- */
+.section-head { display: flex; align-items: center; justify-content: space-between; margin: 8px 2px 9px; }
+.section-title { font-family: "Baloo 2", "Nunito", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.14em; color: var(--text); }
+.head-actions { display: flex; gap: 7px; }
+.icon-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--card-edge); background: var(--surface); color: var(--sage); display: grid; place-items: center; transition: transform 0.15s; cursor: pointer; font-family: inherit; }
+.icon-btn:active { transform: scale(0.92); }
+.icon-btn svg { width: 17px; height: 17px; }
+.icon-btn.editing { background: var(--butter); border-color: var(--butter); color: #2c2410; }
+
+/* ---------- logs ---------- */
+.logs { display: flex; flex-wrap: wrap; gap: 7px; }
+.log-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 99px; border: 1px solid rgba(244, 240, 225, 0.13); background: rgba(35, 42, 34, 0.55); color: var(--ink-faint); font-size: 14.5px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.12s; }
+.log-pill:active { transform: scale(0.96); }
+/* paw prints a bit bigger than the preview (was 12px) */
+.log-pill .paw-ic { width: 19px; height: 19px; fill: currentColor; display: none; flex: none; }
+.log-pill.on { background: var(--butter); border-color: var(--butter); color: #2c2410; }
+.log-pill.on .paw-ic { display: block; }
+.log-pill .log-remove { display: none; width: 17px; height: 17px; margin-left: 1px; place-items: center; flex: none; }
+.log-pill .log-remove svg { width: 12px; height: 12px; display: block; }
+.logs.editing .log-pill { color: var(--text); }
+.logs.editing .log-pill.on { color: #2c2410; }
+.logs.editing .log-remove { display: grid; }
+.log-pill.confirming { background: #a8324a; border-color: #a8324a; color: #fff; }
+.logs-add { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+.logs-add-field { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--card-edge); border-radius: 99px; color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; padding: 9px 15px; outline: none; }
+.logs-add-field::placeholder { color: var(--ink-faint); }
+.logs-add-field:focus { border-color: var(--sage); box-shadow: 0 0 0 2px rgba(168, 198, 134, 0.25); }
+.logs-add-btn { flex: none; background: var(--sage); border: 1px solid var(--sage); color: var(--cream-ink); border-radius: 99px; font-size: 14px; font-weight: 800; font-family: inherit; padding: 9px 18px; cursor: pointer; transition: transform 0.12s; }
+.logs-add-btn:active { transform: scale(0.95); }
+.logs-add-btn:disabled { opacity: 0.5; }
+
+/* ---------- tasks ---------- */
+.task { position: relative; display: flex; align-items: center; gap: 11px; background: rgba(29, 36, 28, 0.55); border: 1px solid var(--card-edge); border-radius: 16px; padding: 9px 10px 9px 11px; margin-bottom: 8px; }
+/* paw prints a bit bigger than the preview (button was 30px, paw 15px) */
+.paw-btn { flex: none; width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(244, 240, 225, 0.45); background: transparent; display: grid; place-items: center; cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s; }
+.paw-btn:active { transform: scale(0.9); }
+.paw-btn svg { width: 22px; height: 22px; fill: var(--cream-ink); opacity: 0; transform: scale(0.5); transition: opacity 0.18s, transform 0.22s cubic-bezier(0.34, 1.6, 0.6, 1); }
+.task.done .paw-btn { background: var(--sage); border-color: var(--sage); }
+.task.done .paw-btn svg { opacity: 1; transform: scale(1); }
+.task-body { flex: 1; min-width: 0; background: none; border: none; padding: 0; text-align: left; font-family: inherit; color: inherit; cursor: pointer; }
+.task-text { font-size: 15.5px; font-weight: 600; line-height: 1.35; color: var(--text); overflow-wrap: break-word; }
+.task.done .task-text { color: var(--dim); text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: rgba(244, 240, 225, 0.65); }
+.task-note-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 3px; }
+/* User tags on a task row — same pill format as the "next day" tag:
+   a pill with a butter-yellow outline and butter-yellow lowercase
+   text, and no fill — the background behind it shows through. */
+.task-tag { display: inline-flex; align-items: center; background: transparent; border: 1.5px solid var(--butter); color: var(--butter); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.35; padding: 2px 11px 3px; border-radius: 99px; white-space: nowrap; }
+.task.done .task-tag { opacity: 0.75; }
+/* "next day" tag — same pill format as the user tags: a butter-yellow
+   outline and butter-yellow lowercase text with a transparent fill.
+   It only ever appears on the greyed-out copy of a task on the day it
+   was added. */
+.next-day-tag { display: inline-flex; align-items: center; background: transparent; border: 1.5px solid var(--butter); color: var(--butter); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.35; padding: 2px 11px 3px; border-radius: 99px; white-space: nowrap; }
+/* A task that has moved on to the next day, seen on its added day:
+   a bit greyed out while it is still unchecked, but still checkable
+   from that day — checking it there makes it a normal done task on
+   that day (the .next-day class drops off) and removes it from the
+   carried-over list. It has no ⋮ menu; a copy that was already
+   checked off on a later day is settled and stays inert. */
+.task.next-day { background: #151a14; border-color: rgba(168, 198, 134, 0.1); }
+.task.next-day .task-text { color: rgba(244, 240, 225, 0.36); }
+.task.next-day .task-tag { opacity: 0.55; }
+.task.next-day .task-time { color: rgba(244, 240, 225, 0.26); }
+.task.next-day .task-body { cursor: pointer; }
+.task.next-day .paw-btn { border-color: rgba(244, 240, 225, 0.28); cursor: pointer; opacity: 0.7; }
+.task.next-day.done .task-body { cursor: default; }
+.task.next-day.done .paw-btn { cursor: default; opacity: 0.5; }
+.task.next-day.done .paw-btn:active { transform: none; }
+.task.next-day.done .paw-btn { background: transparent; border-color: rgba(244, 240, 225, 0.16); }
+.task.next-day.done .paw-btn svg { opacity: 0; }
+.task.next-day.done .task-text { text-decoration: none; }
+.task-time { font-size: 11.5px; font-weight: 800; color: var(--sage); white-space: nowrap; }
+.task-menu { flex: none; background: none; border: none; color: var(--dim); padding: 6px 4px; cursor: pointer; }
+.task-menu svg { width: 17px; height: 17px; display: block; }
+/* ⋮ pop-up: a horizontal capsule bar of icon-only actions (calendar =
+   move to next day, pencil = edit, trash = delete), hanging off the
+   bottom-right of the task row with a small pointer up to the ⋮ button.
+   Styled in this app's own colours (cream sheet, dark ink icons, danger
+   red for delete) — not the reference's dark bar. The icons sit close
+   together (2px gap between 36px buttons), much tighter than the
+   reference's wide spread. The ⋮ button itself (.task-menu above) is
+   unchanged: no border, same style as before. */
+.task-pop { position: absolute; right: 6px; top: calc(100% - 8px); z-index: 30; display: flex; align-items: center; gap: 2px; background: var(--sheet-white); border: 1px solid var(--sheet-white); border-radius: 999px; padding: 5px 7px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); transform-origin: calc(100% - 14px) 0; animation: popMenu 0.28s cubic-bezier(0.34, 1.5, 0.5, 1) both; }
+.task-pop::before { content: ""; position: absolute; top: -5px; right: 15px; width: 10px; height: 10px; background: var(--sheet-white); transform: rotate(45deg); border-radius: 2px; }
+.task-pop.out { animation: popMenuOut 0.16s ease-in both; }
+@keyframes popMenu { 0% { transform: scale(0.35); opacity: 0; } 60% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes popMenuOut { from { transform: scale(1); opacity: 1; } to { transform: scale(0.35); opacity: 0; } }
+.task-pop .pop-ic { position: relative; z-index: 1; flex: none; width: 36px; height: 36px; display: grid; place-items: center; background: none; border: none; color: var(--cream-ink); padding: 0; border-radius: 50%; cursor: pointer; font-family: inherit; }
+.task-pop .pop-ic svg { width: 20px; height: 20px; display: block; }
+.task-pop .pop-ic:active { background: rgba(131, 176, 121, 0.45); }
+.task-pop .pop-ic.danger { color: #a8324a; }
+.task-pop .pop-ic.danger:active { background: rgba(168, 50, 74, 0.16); }
+/* Armed delete state: the trash button widens into a solid red pill
+   reading "Delete?" — tapping it again confirms, as before. */
+.task-pop .pop-ic.confirming { width: auto; display: inline-flex; align-items: center; gap: 5px; padding: 0 11px; border-radius: 999px; background: #a8324a; color: #fff; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.task-pop .pop-ic.confirming svg { width: 16px; height: 16px; }
+.task-pop .pop-ic.confirming:active { background: #a8324a; }
+.empty-card { background: var(--surface); border: 1px solid var(--card-edge); border-radius: 18px; padding: 26px 18px; text-align: center; margin-top: 14px; }
+.empty-card p:first-child { font-size: 16px; font-weight: 700; color: var(--text); }
+.empty-card p:last-child { font-size: 13.5px; color: var(--dim); margin-top: 4px; font-weight: 600; }
+
+/* ---------- reminders card ---------- */
+.reminders { position: relative; background: var(--cream); color: var(--cream-ink); border-radius: 18px; padding: 13px 14px 22px; margin-top: 19px; overflow: hidden; }
+.reminders .corner-star { position: absolute; width: 56px; height: 56px; right: -17px; bottom: -18px; fill: var(--sage); opacity: 0.25; transform: rotate(16deg); }
+.reminders-head { display: flex; align-items: center; justify-content: space-between; }
+.reminders-title { font-family: "Baloo 2", "Nunito", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.14em; }
+.reminders .icon-btn { background: var(--cream-ink); border-color: var(--cream-ink); color: var(--sage); }
+/* The manage-reminders button is the sticky-note cat art itself — no
+   dark circle, no background of its own (the art's green background was
+   removed at extraction, so it sits straight on the cream card). */
+.reminders .reminder-art-btn { width: 42px; height: 42px; background: none; border: none; }
+.reminders .reminder-art-btn img { width: 40px; height: auto; display: block; }
+.reminder-item { display: flex; align-items: center; gap: 10px; margin-top: 10px; position: relative; z-index: 1; }
+.reminder-ic { flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(131, 176, 121, 0.35); display: grid; place-items: center; color: var(--cream-ink); }
+/* One-time reminders stand apart from repeating ones: a calendar icon
+   (in place of the circular repeat arrow) on a butter-yellow disc. */
+.reminder-ic.once { background: var(--butter); }
+.reminder-ic svg { width: 14px; height: 14px; }
+.reminder-text { font-size: 14.5px; font-weight: 700; flex: 1; min-width: 0; }
+.reminder-sent { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: #5d7d3e; }
+.reminders-empty { margin-top: 10px; font-size: 14px; font-weight: 600; color: rgba(38, 51, 31, 0.55); position: relative; z-index: 1; }
+
+/* ---------- pop-ups ---------- */
+.sheet-wrap { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 20px 14px; }
+.sheet-backdrop { position: absolute; inset: 0; background: rgba(4, 7, 4, 0.62); animation: backdropIn 0.25s ease both; }
+.sheet-wrap.closing .sheet-backdrop { animation: backdropOut 0.22s ease both; }
+@keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes backdropOut { from { opacity: 1; } to { opacity: 0; } }
+.sheet { position: relative; width: 100%; max-width: 440px; background: var(--sheet-white); color: var(--cream-ink); border: 1px solid var(--sheet-white); border-radius: 24px; padding: 14px; max-height: calc(100dvh - 40px); overflow-y: auto; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55); }
+.sheet.pop-in { animation: popIn 0.42s cubic-bezier(0.34, 1.45, 0.5, 1) both; }
+.sheet.pop-out { animation: popOut 0.22s ease-in both; }
+@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 55% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes popOut { from { transform: scale(1); opacity: 1; } to { transform: scale(0.5); opacity: 0; } }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.sheet-title { font-family: "Baloo 2", "Nunito", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.14em; display: flex; align-items: center; gap: 8px; }
+.sheet-actions { display: flex; gap: 7px; }
+.sheet .icon-btn { width: 30px; height: 30px; background: var(--sheet-green); border-color: var(--sheet-green); color: var(--cream-ink); }
+.sheet .icon-btn svg { width: 15px; height: 15px; }
+.sheet .icon-btn.go { background: var(--cream-ink); border-color: var(--cream-ink); color: var(--sheet-green); }
+.sheet .icon-btn:disabled { opacity: 0.5; }
+.field { width: 100%; background: var(--sheet-green); border: 1px solid var(--sheet-green); border-radius: 12px; color: var(--cream-ink); font-family: inherit; font-size: 14px; font-weight: 600; padding: 9px 11px; outline: none; }
+.field:focus { box-shadow: 0 0 0 2px rgba(38, 51, 31, 0.3); }
+.field::placeholder { color: rgba(38, 51, 31, 0.45); }
+.field.tags-field { margin-top: 0; }
+/* Tags field and the Add/Save button share one row: the field gives up
+   width to the button instead of spanning the whole pop-up. */
+.task-tags-row { display: flex; align-items: center; gap: 8px; margin-top: 7px; }
+.task-tags-row .tags-field { flex: 1; min-width: 0; width: auto; }
+.task-tags-row .send-btn { flex: none; }
+/* A bit more air between the pencil-cat header and the Task field below it */
+#sheetTaskForm .sheet-head { margin-bottom: 16px; }
+/* Pencil-cat art sitting just before the NEW TASK title in the task pop-up */
+.new-task-art { height: 34px; width: auto; display: block; margin: -7px 0 -7px -3px; }
+/* task form: tag chips + the confirm button row at the bottom right,
+   styled like the reminders pop-up's + Add button (.send-btn) */
+/* Chips sit tight under the tags row, so adding tags only grows the
+   pop-up a little in height (one compact chip row, no extra footer row). */
+.tag-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+/* Form tag chips share the exact .task-tag rule above (same transparent
+   fill, border, colour, font size, weight and height as the tags displayed
+   on tasks) — the only additions here are the small gap and the remove (×)
+   button, sized so it never makes the chip taller than a task tag. */
+.tag-chip { gap: 5px; padding-right: 6px; }
+.tag-chip-x { display: grid; place-items: center; width: 14px; height: 14px; border-radius: 50%; border: none; background: none; color: var(--butter); padding: 0; cursor: pointer; flex: none; }
+.tag-chip-x svg { width: 9px; height: 9px; display: block; }
+#sheetTaskForm .sheet { container-type: inline-size; }
+.seg { display: inline-flex; background: var(--sheet-green); border: 1px solid var(--sheet-green); border-radius: 99px; padding: 2px; flex: none; }
+.seg button { border: none; background: none; color: rgba(38, 51, 31, 0.6); font-size: 12.5px; font-weight: 800; font-family: inherit; padding: 6px 12px; border-radius: 99px; white-space: nowrap; cursor: pointer; }
+.seg button.on { background: var(--cream-ink); color: var(--sheet-green); }
+.seg.butter button.on { background: var(--butter); color: #2c2410; }
+.form-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.form-row .grow { flex: 1; min-width: 0; }
+select.field, input[type="date"].field { appearance: none; -webkit-appearance: none; padding: 8px 10px; font-size: 13px; color-scheme: light; }
+.send-btn { position: relative; display: inline-flex; align-items: center; gap: 6px; background: var(--cream-ink); color: var(--sheet-green); border: none; border-radius: 99px; font-size: 13px; font-weight: 800; font-family: inherit; padding: 9px 15px; flex: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+.send-btn:active { transform: scale(0.94); }
+.send-btn:disabled { opacity: 0.5; }
+.send-btn svg { width: 14px; height: 14px; }
+.send-btn.sent { background: var(--butter); color: #2c2410; }
+.sent-pop { position: absolute; left: 50%; top: -6px; transform: translate(-50%, 0) scale(0.6); background: var(--butter); color: #2c2410; font-size: 11px; font-weight: 900; padding: 3px 8px; border-radius: 99px; display: inline-flex; align-items: center; gap: 4px; opacity: 0; pointer-events: none; white-space: nowrap; }
+.sent-pop svg { width: 11px; height: 11px; fill: #2c2410; }
+.sent-pop.play { animation: sentPop 1.3s ease forwards; }
+@keyframes sentPop { 0% { opacity: 0; transform: translate(-50%, 2px) scale(0.6); } 18% { opacity: 1; transform: translate(-50%, -10px) scale(1.05); } 30% { transform: translate(-50%, -13px) scale(1); } 75% { opacity: 1; transform: translate(-50%, -15px) scale(1); } 100% { opacity: 0; transform: translate(-50%, -22px) scale(0.9); } }
+.rep-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 8px; }
+.rep-item { display: flex; align-items: center; gap: 9px; background: var(--sheet-green); border: 1px solid var(--sheet-green); border-radius: 12px; padding: 5px 10px 5px 12px; color: var(--cream-ink); }
+.rep-item .rep-ic { width: 14px; height: 14px; flex: none; color: var(--cream-ink); }
+.rep-text { flex: 1; min-width: 0; font-size: 13.5px; font-weight: 700; overflow-wrap: break-word; }
+.rep-text.off { opacity: 0.55; }
+.rep-when { font-size: 11.5px; font-weight: 700; color: rgba(38, 51, 31, 0.5); white-space: nowrap; }
+.rep-del { flex: none; width: 34px; height: 34px; border-radius: 50%; border: none; background: none; color: rgba(38, 51, 31, 0.55); display: grid; place-items: center; cursor: pointer; font-family: inherit; }
+.rep-del svg { width: 17px; height: 17px; }
+.rep-del.confirming { width: auto; padding: 0 9px; border-radius: 99px; background: #a8324a; color: #fff; font-size: 11.5px; font-weight: 800; }
+.switch { flex: none; width: 36px; height: 20px; border-radius: 99px; border: none; padding: 0; background: rgba(38, 51, 31, 0.28); position: relative; transition: background 0.2s; cursor: pointer; }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--sheet-green); transition: left 0.2s, background 0.2s; }
+.switch.on { background: var(--cream-ink); }
+.switch.on::after { left: 19px; background: var(--sheet-white); }
+.sheet-divider { display: flex; align-items: center; gap: 8px; color: rgba(38, 51, 31, 0.55); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; margin: 2px 0 4px; }
+.sheet-divider::after { content: ""; flex: 1; height: 1px; background: rgba(38, 51, 31, 0.18); }
+#sheetReminders .sheet { container-type: inline-size; }
+.sheet-fish { height: 46px; height: 11.8cqw; width: auto; margin: -21px 0 -2px -2px; margin: -5.5cqw 0 -0.5cqw -2px; }
+.x-btn { background: none; border: none; padding: 2px; line-height: 0; cursor: pointer; transition: transform 0.15s; }
+.x-btn:active { transform: scale(0.9); }
+.x-btn img { width: 23px; width: 6cqw; height: auto; display: block; }
+#sheetReminders .sheet-head, #sheetReminders .rep-list, #sheetReminders .sheet-divider, #sheetReminders .field, #sheetReminders .form-row { position: relative; z-index: 1; }
+.sheet-foot { position: relative; z-index: 0; margin-top: 8px; min-height: 44px; min-height: 11.5cqw; pointer-events: none; }
+.sheet-foot .send-btn { pointer-events: auto; }
+.peek-face { position: absolute; right: -14px; bottom: -14px; width: 158px; width: 41.5cqw; height: auto; display: block; }
+#sheetReminders .field { padding: 10px 11px; }
+
+.status-msg { padding: 64px 0; text-align: center; color: var(--dim); font-weight: 600; }
+.status-msg button { margin-top: 12px; background: var(--sage); color: var(--cream-ink); border: none; border-radius: 99px; padding: 10px 20px; font-family: inherit; font-weight: 800; font-size: 14px; cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
