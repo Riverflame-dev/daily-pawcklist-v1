@@ -1038,9 +1038,9 @@
       function renderRemLists() {
         var box = $("remLists");
         if (!box) return;
+        // One-time reminders are not listed here — they are sent once and
+        // live only on that day's REMINDERS card, not in the manager.
         var repeating = state.templates.filter(function (t) { return t.kind !== "once"; });
-        var oneTimes = state.templates.filter(function (t) { return t.kind === "once"; })
-          .sort(function (a, b) { return (a.specificDate || "").localeCompare(b.specificDate || ""); });
         function itemHtml(t) {
           var confirming = remForm.confirmDeleteId === t.id;
           return '<div class="rep-item">' +
@@ -1054,7 +1054,6 @@
         }
         var html = "";
         if (repeating.length > 0) html += '<div class="rep-list">' + repeating.map(itemHtml).join("") + '</div>';
-        if (oneTimes.length > 0) html += '<div class="sheet-divider">ONE-TIME</div><div class="rep-list">' + oneTimes.map(itemHtml).join("") + '</div>';
         box.innerHTML = html;
         box.querySelectorAll("[data-toggle-tpl]").forEach(function (b) {
           b.addEventListener("click", function () {
