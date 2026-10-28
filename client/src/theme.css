@@ -171,31 +171,34 @@ body {
 .task-text { font-size: 15.5px; font-weight: 600; line-height: 1.35; color: var(--text); overflow-wrap: break-word; }
 .task.done .task-text { color: var(--dim); text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: rgba(244, 240, 225, 0.65); }
 .task-note-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 3px; }
-/* User tags on a task row — same pill format as the "next day" tag:
-   a pill with a butter-yellow outline and butter-yellow lowercase
-   text, and no fill — the background behind it shows through. */
-.task-tag { display: inline-flex; align-items: center; background: transparent; border: 1.5px solid var(--butter); color: var(--butter); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.35; padding: 2px 11px 3px; border-radius: 99px; white-space: nowrap; }
+/* User tags on a task row — borderless (the butter outline was too
+   bright, removed 2026-10-27): just butter-yellow lowercase text, no
+   border and no fill — the background behind it shows through. The
+   text colour stays exactly as before. */
+.task-tag { display: inline-flex; align-items: center; background: transparent; border: none; color: var(--butter); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.35; padding: 2px 4px 3px; border-radius: 99px; white-space: nowrap; }
 .task.done .task-tag { opacity: 0.75; }
-/* "next day" tag — same pill format as the user tags: a butter-yellow
-   outline and butter-yellow lowercase text with a transparent fill.
-   It only ever appears on the greyed-out copy of a task on the day it
-   was added. */
-.next-day-tag { display: inline-flex; align-items: center; background: transparent; border: 1.5px solid var(--butter); color: var(--butter); font-size: 12px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.35; padding: 2px 11px 3px; border-radius: 99px; white-space: nowrap; }
+/* Rollover note — replaces the old "next day" tag on the greyed-out
+   copy of a task on the day it was added. It is plain note text that
+   appears after the task (below the title / tags), never a pill:
+   "Didn't get done, rolled over to next day" while the task is still
+   open on a later day, changing to "Completed later" once the task
+   has been finished on a future date. */
+.rollover-note { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 600; line-height: 1.35; color: rgba(244, 240, 225, 0.62); overflow-wrap: break-word; }
 /* A task that has moved on to the next day, seen on its added day:
-   a bit greyed out while it is still unchecked, but still checkable
-   from that day — checking it there makes it a normal done task on
-   that day (the .next-day class drops off) and removes it from the
-   carried-over list. It has no ⋮ menu; a copy that was already
-   checked off on a later day is settled and stays inert. */
+   greyed out and NOT checkable from that day — once it was left
+   unchecked for that day it can only be checked off on the later day
+   it lives on. Its paw button and body are inert; the ⋮ menu is the
+   only interactive element on the row, and it offers edit / delete
+   only (see TaskRow). */
 .task.next-day { background: #151a14; border-color: rgba(168, 198, 134, 0.1); }
 .task.next-day .task-text { color: rgba(244, 240, 225, 0.36); }
 .task.next-day .task-tag { opacity: 0.55; }
 .task.next-day .task-time { color: rgba(244, 240, 225, 0.26); }
-.task.next-day .task-body { cursor: pointer; }
-.task.next-day .paw-btn { border-color: rgba(244, 240, 225, 0.28); cursor: pointer; opacity: 0.7; }
+.task.next-day .task-body { cursor: default; }
+.task.next-day .paw-btn { border-color: rgba(244, 240, 225, 0.28); cursor: default; opacity: 0.7; }
+.task.next-day .paw-btn:active { transform: none; }
 .task.next-day.done .task-body { cursor: default; }
 .task.next-day.done .paw-btn { cursor: default; opacity: 0.5; }
-.task.next-day.done .paw-btn:active { transform: none; }
 .task.next-day.done .paw-btn { background: transparent; border-color: rgba(244, 240, 225, 0.16); }
 .task.next-day.done .paw-btn svg { opacity: 0; }
 .task.next-day.done .task-text { text-decoration: none; }
@@ -286,10 +289,11 @@ body {
 /* Chips sit tight under the tags row, so adding tags only grows the
    pop-up a little in height (one compact chip row, no extra footer row). */
 .tag-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
-/* Form tag chips share the exact .task-tag rule above (same transparent
-   fill, border, colour, font size, weight and height as the tags displayed
-   on tasks) — the only additions here are the small gap and the remove (×)
-   button, sized so it never makes the chip taller than a task tag. */
+/* Form tag chips share the exact .task-tag rule above (same borderless
+   style — transparent fill, no border, same colour, font size, weight
+   and height as the tags displayed on tasks) — the only additions here
+   are the small gap and the remove (×) button, sized so it never makes
+   the chip taller than a task tag. */
 .tag-chip { gap: 5px; padding-right: 6px; }
 .tag-chip-x { display: grid; place-items: center; width: 14px; height: 14px; border-radius: 50%; border: none; background: none; color: var(--butter); padding: 0; cursor: pointer; flex: none; }
 .tag-chip-x svg { width: 9px; height: 9px; display: block; }

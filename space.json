@@ -1,8 +1,8 @@
 {
-  "runtime": "typescript",
-  "platformVersion": 25,
   "entry": "client/dist/index.html",
-  "name": "Daily Checklist V2",
-  "slug": "daily-checklist-v2",
-  "managedCronJobs": []
+  "managedCronJobs": [],
+  "name": "Pawcklist",
+  "platformVersion": 25,
+  "runtime": "typescript",
+  "slug": "daily-checklist-v2"
 }

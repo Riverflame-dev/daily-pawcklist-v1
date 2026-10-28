@@ -268,16 +268,16 @@ function TaskRow({
   task: Task;
   // True for the historical copy on the day the task was added, once the
   // task has moved on — rolled over to a later day, manually moved to a
-  // later day, or checked off on a later day: it shows the "next day"
-  // tag and is a bit greyed out. While still unchecked it stays
-  // interactive, so a task that was actually finished on its added day
-  // can still be checked off from that day later (which also removes it
-  // from every future page). Checking it off there records that day as
-  // its done day, so this copy stops being a next-day copy and returns
-  // to normal opacity. Once the task has been checked off on a later
-  // day, this copy is greyed out and locked instead. The live copy — on
-  // today (or whichever later day it is viewed on) — never gets this
-  // flag, so it looks exactly like any other task, with no tag.
+  // later day, or checked off on a later day: it is greyed out and shows
+  // a rollover note after the task instead of a tag — "Didn't get done,
+  // rolled over to next day" while still open, changing to "Completed
+  // later" once it has been finished on a future date. This copy is NOT
+  // checkable: once a task was left unchecked for that day it cannot be
+  // checked off from that day later — it can only be checked off on the
+  // later day it lives on. The ⋮ menu is its only interactive element,
+  // and it offers edit / delete only. The live copy — on today (or
+  // whichever later day it is viewed on) — never gets this flag, so it
+  // looks exactly like any other task, with no note.
   nextDay?: boolean;
   onToggle: (task: Task) => void;
   onEdit: (task: Task, el: HTMLElement | null) => void;
@@ -321,11 +321,17 @@ function TaskRow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpen, menuClosing]);
 
-  const hasMetaRow = Boolean(task.tags.length > 0 || nextDay || task.timeHint);
-  // A next-day copy that was already checked off on a later day is
-  // settled — toggling it from its added day would undo that later
-  // completion, so only the still-unchecked copies stay toggleable.
-  const toggleLocked = nextDay && task.done;
+  const hasMetaRow = Boolean(task.tags.length > 0 || task.timeHint);
+  // A next-day (rolled-over) copy is never checkable from its added
+  // day — not while it is still open, and not after it was completed
+  // on a later day. Its paw button and body stay inert; only the ⋮
+  // menu (edit / delete) is interactive on that copy.
+  const toggleLocked = nextDay;
+  const rolloverNote = nextDay
+    ? task.done
+      ? "Completed later"
+      : "Didn't get done, rolled over to next day"
+    : null;
 
   return (
     <article
@@ -358,15 +364,14 @@ function TaskRow({
         <span className="task-text" style={{ display: "block" }}>{task.title}</span>
         {hasMetaRow && (
           <span className="task-note-row">
-            {nextDay && <span className="next-day-tag">next day</span>}
             {task.tags.map((tag) => (
               <span key={tag} className="task-tag">{tag}</span>
             ))}
             {task.timeHint && <span className="task-time">{task.timeHint}</span>}
           </span>
         )}
+        {rolloverNote && <span className="rollover-note">{rolloverNote}</span>}
       </button>
-      {!nextDay && (
       <button
         ref={menuBtnRef}
         type="button"
@@ -389,9 +394,9 @@ function TaskRow({
           <circle cx="12" cy="19" r="1.9" />
         </svg>
       </button>
-      )}
-      {menuOpen && !nextDay && (
+      {menuOpen && (
         <div className={`task-pop${menuClosing ? " out" : ""}`} role="menu" aria-label={`Actions for "${task.title}"`}>
+          {!nextDay && (
           <button
             type="button"
             className="pop-ic"
@@ -404,6 +409,7 @@ function TaskRow({
           >
             <CalendarNextIcon />
           </button>
+          )}
           <button
             type="button"
             className="pop-ic"
@@ -804,12 +810,10 @@ function RemindersPopup({
     };
   }, []);
 
+  // One-time reminders are deliberately NOT listed here: they are sent
+  // once and simply show in that day's REMINDERS card, so there is no
+  // entry to manage and the editing page stays free of them.
   const repeating = templates.filter((t) => t.kind !== "once");
-  // One-time reminders are listed too, with their set date, so they can
-  // be seen and managed before the day they display on arrives.
-  const oneTimes = templates
-    .filter((t) => t.kind === "once")
-    .sort((a, b) => (a.specificDate ?? "").localeCompare(b.specificDate ?? ""));
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -895,54 +899,6 @@ function RemindersPopup({
             </div>
           ))}
         </div>
-      )}
-
-      {oneTimes.length > 0 && (
-        <>
-          <div className="sheet-divider">ONE-TIME</div>
-          <div className="rep-list">
-            {oneTimes.map((t) => (
-              <div key={t.id} className="rep-item">
-                <OneTimeIcon className="rep-ic" />
-                <span className={`rep-text${t.active ? "" : " off"}`}>{t.title}</span>
-                <span className="rep-when">{shortWhen(t)}</span>
-                <button
-                  type="button"
-                  className={`switch${t.active ? " on" : ""}`}
-                  role="switch"
-                  aria-checked={t.active}
-                  aria-label={`${t.title} one-time reminder: ${t.active ? "on" : "off"}`}
-                  onClick={() => onToggleActive(t)}
-                />
-                <button
-                  type="button"
-                  className={`rep-del${confirmDeleteId === t.id ? " confirming" : ""}`}
-                  aria-label={
-                    confirmDeleteId === t.id
-                      ? `Confirm deleting reminder "${t.title}"`
-                      : `Delete reminder "${t.title}"`
-                  }
-                  onClick={() => {
-                    if (confirmDeleteId === t.id) {
-                      setConfirmDeleteId(null);
-                      onDelete(t);
-                    } else {
-                      setConfirmDeleteId(t.id);
-                    }
-                  }}
-                >
-                  {confirmDeleteId === t.id ? (
-                    "Delete?"
-                  ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true">
-                      <path d="M6 6l12 12M18 6L6 18" />
-                    </svg>
-                  )}
-                </button>
-              </div>
-            ))}
-          </div>
-        </>
       )}
 
       <form onSubmit={submit}>
@@ -1157,19 +1113,17 @@ export function App() {
   const recurringToday = day.data?.recurringToday ?? [];
   // Carried-over tasks appear with the todos in one list, first. On the
   // day they are carried to, they look exactly like any other task — no
-  // tag, and when one is checked off there it stays on that page,
-  // crossed off like any other completed task. The "next day" tag
+  // note, and when one is checked off there it stays on that page,
+  // crossed off like any other completed task. The rollover note
   // belongs only to the copy on the day the task was added (its origin
   // day, which a manual "move to next day" never changes): that copy
   // has moved on when its day has passed, when it was manually moved to
-  // a later day, or when it was checked off on a later day. It shows a
-  // bit greyed out with the tag. While still unchecked it stays
-  // checkable from the origin page — ticking it there records the
-  // origin day as its done day, so this copy stops being a next-day
-  // copy (back to normal opacity, tag gone) and the task disappears
-  // from every future page, no matter which date it rolled over to or
-  // was manually moved to. Once it has been checked off on a later day
-  // instead, the origin copy is greyed out and locked (see TaskRow).
+  // a later day, or when it was checked off on a later day. It shows
+  // greyed out with a note after the task — "Didn't get done, rolled
+  // over to next day" while still open, "Completed later" once checked
+  // off on a future date. It is NOT checkable from the origin page at
+  // all; the ⋮ menu (edit / delete only) is its only interactive
+  // element (see TaskRow).
   const isNextDayCopy = (t: Task): boolean => {
     if (selectedDate !== t.originDay) return false;
     // Finished on the very day it was added — it never moved on.
